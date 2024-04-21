@@ -28,7 +28,7 @@ public class UserDao {
     }
 
     public void add(User user) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/study", "root", "dlfcjf2@");
+        Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "insert into users(id, name, password) values(?,?,?)");
         preparedStatement.setString(1, user.getId());
@@ -42,7 +42,7 @@ public class UserDao {
     }
 
     public User get(String id) throws SQLException {
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/study", "root", "dlfcjf2@");
+        Connection connection = getConnection();
 
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "select * from users where id = ?");
@@ -61,5 +61,9 @@ public class UserDao {
         connection.close();
 
         return user;
+    }
+
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/study", "root", "dlfcjf2@");
     }
 }
